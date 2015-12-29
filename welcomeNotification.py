@@ -66,8 +66,13 @@ def notificationLauncher(secsLeft):
         sys.exit()
 
     currTime = calcCurrentTime()
-    os.system('say "Currently %s, %s %s, and it is %s degrees with %s"'
-    %(currTime[0], currTime[1], currTime[2], currentTemp, currentStatus))
+
+    if secsLeft == 3600:
+        os.system('say "Currently %s, %s, and it is %s degrees with %s"'
+        %(currTime[0], currTime[2], currentTemp, currentStatus))
+    else:
+        os.system('say "Currently %s, %s %s, and it is %s degrees with %s"'
+        %(currTime[0], currTime[1], currTime[2], currentTemp, currentStatus))
 
     time.sleep(secsLeft)
 
