@@ -7,6 +7,14 @@ from notificationHandler import notify
 from notificationHandler import clearNotifications
 import weatherHandler
 import os
+import urllib2
+
+def internet_on():
+    try:
+        response=urllib2.urlopen('http://173.194.43.79',timeout=1)
+        return True
+    except urllib2.URLError as err: pass
+    return False
 
 def calcSecsTilNextHour():
     secsInHour = 3600
@@ -56,7 +64,7 @@ def notificationLauncher(secsLeft):
         notify("Good Evening!", currentStatus,
         "Temp is %s degrees right now" %currentTemp, sound=False)
 
-    elif (hour >= 23 and hour < 6) or (hour >= 0 and hour < 6):
+    elif hour >= 23 or (hour >= 0 and hour < 6):
         notify("Good Night!", currentStatus,
         "Temp is %s degrees right now" %currentTemp, sound=False)
 
@@ -77,8 +85,12 @@ def notificationLauncher(secsLeft):
     time.sleep(secsLeft)
 
 if __name__ == '__main__':
-    secsLeft = calcSecsTilNextHour()
-    notificationLauncher(secsLeft)
+    loop_counter = 0
+    for i in range(0,5):
+        if internet_on():
+            break
+        time.sleep(20)
 
     while True:
-        notificationLauncher(3600)
+        secsLeft = calcSecsTilNextHour()
+        notificationLauncher(secsLeft)
