@@ -16,7 +16,7 @@ def notify(title, subtitle, info_text, delay=0, sound=False, userInfo={}):
 	notification.setSubtitle_(subtitle)
 	notification.setInformativeText_(info_text)
 	notification.setUserInfo_(userInfo)
-    
+
 	if sound:
 		notification.setSoundName_("NSUserNotificationDefaultSoundName")
 	notification.setDeliveryDate_(Foundation.NSDate.dateWithTimeInterval_sinceDate_(delay, Foundation.NSDate.date()))
@@ -27,8 +27,5 @@ def clearNotifications():
 
         NSUserNotificationCenter = objc.lookUpClass('NSUserNotificationCenter')
         NSUserNotificationCenter.defaultUserNotificationCenter().removeAllDeliveredNotifications()
-
-#notify("Test message", "Subtitle", "This message should appear instantly, with a sound", sound=True)
-#sys.stdout.write("Notification sent...\n")
 
 clearNotifications()
